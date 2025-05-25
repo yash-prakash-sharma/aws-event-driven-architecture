@@ -41,7 +41,7 @@ variable "gsi_write_capacity" {
   default     = 1
 }
 
-var "deletion_protection_enabled" {
+variable "deletion_protection_enabled" {
   description = "Write capacity units for the global secondary index."
   type        = bool
   default     = true
@@ -82,14 +82,14 @@ variable "receive_wait_time_seconds" {
 
 variable "dlq_message_retention_seconds" {
   description = "Number of seconds Amazon SQS DLQ retains a message"
-  type = number
-  default = 1209600
+  type        = number
+  default     = 1209600
 }
 
 variable "dlq_max_receive_count" {
   description = "Number of failed processing attempts to move to DLQ"
-  type = number
-  default = 3
+  type        = number
+  default     = 3
 }
 
 variable "function_name" {}

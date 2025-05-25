@@ -26,25 +26,25 @@ provider "aws" {
 }
 
 module "dynamodb" {
-  source = "../../modules/dynamodb"
-  resource_prefix = var.resource_prefix
-  read_capacity = var.read_capacity
-  write_capacity = var.write_capacity
-  gsi_read_capacity = var.gsi_read_capacity
-  gsi_write_capacity = var.gsi_write_capacity
+  source                      = "../../modules/dynamodb"
+  resource_prefix             = var.resource_prefix
+  read_capacity               = var.read_capacity
+  write_capacity              = var.write_capacity
+  gsi_read_capacity           = var.gsi_read_capacity
+  gsi_write_capacity          = var.gsi_write_capacity
   deletion_protection_enabled = var.deletion_protection_enabled
 }
 
 module "sqs" {
-  source                    = "../../modules/sqs"
-  queue_name                = var.queue_name
-  delay_seconds             = var.delay_seconds
-  visibility_timeout        = var.visibility_timeout
-  max_message_size          = var.max_message_size
-  message_retention_seconds = var.message_retention_seconds
+  source                        = "../../modules/sqs"
+  queue_name                    = var.queue_name
+  delay_seconds                 = var.delay_seconds
+  visibility_timeout            = var.visibility_timeout
+  max_message_size              = var.max_message_size
+  message_retention_seconds     = var.message_retention_seconds
   dlq_message_retention_seconds = var.dlq_message_retention_seconds
-  dlq_max_receive_count = var.dlq_max_receive_count
-  receive_wait_time_seconds = var.receive_wait_time_seconds
+  dlq_max_receive_count         = var.dlq_max_receive_count
+  receive_wait_time_seconds     = var.receive_wait_time_seconds
 }
 
 module "iam" {
