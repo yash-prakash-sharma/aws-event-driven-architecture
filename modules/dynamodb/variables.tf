@@ -27,7 +27,7 @@ variable "gsi_write_capacity" {
   default     = 1
 }
 
-var "deletion_protection_enabled" {
+variable "deletion_protection_enabled" {
   description = "Write capacity units for the global secondary index."
   type        = bool
   default     = true
