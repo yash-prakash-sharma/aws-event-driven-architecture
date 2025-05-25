@@ -10,6 +10,44 @@ variable "env" {
   default     = "dev"
 }
 
+variable "resource_prefix" {
+  description = "The prefix for naming resources"
+  type        = string
+  default     = "event-driven-architecture"
+}
+
+# dynamodb module
+variable "read_capacity" {
+  description = "Read capacity units for the table."
+  type        = number
+  default     = 1
+}
+
+variable "write_capacity" {
+  description = "Write capacity units for the table."
+  type        = number
+  default     = 1
+}
+
+variable "gsi_read_capacity" {
+  description = "Read capacity units for the global secondary index."
+  type        = number
+  default     = 1
+}
+
+variable "gsi_write_capacity" {
+  description = "Write capacity units for the global secondary index."
+  type        = number
+  default     = 1
+}
+
+var "deletion_protection_enabled" {
+  description = "Write capacity units for the global secondary index."
+  type        = bool
+  default     = true
+}
+
+# sqs module
 variable "queue_name" {}
 variable "delay_seconds" {
   description = "Time in seconds that the delivery of all messages in the queue will be delayed"
@@ -42,10 +80,16 @@ variable "receive_wait_time_seconds" {
   default     = 0
 }
 
-variable "resource_prefix" {
-  description = "The prefix for naming resources"
-  type        = string
-  default     = "event-driven-architecture"
+variable "dlq_message_retention_seconds" {
+  description = "Number of seconds Amazon SQS DLQ retains a message"
+  type = number
+  default = 1209600
+}
+
+variable "dlq_max_receive_count" {
+  description = "Number of failed processing attempts to move to DLQ"
+  type = number
+  default = 3
 }
 
 variable "function_name" {}
