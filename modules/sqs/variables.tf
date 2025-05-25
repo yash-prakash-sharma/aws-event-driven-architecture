@@ -29,3 +29,15 @@ variable "receive_wait_time_seconds" {
   type = number  
   default = 0
 }
+
+variable "dlq_message_retention_seconds" {
+  description = "Number of seconds Amazon SQS DLQ retains a message"
+  type = number
+  default = 1209600
+}
+
+variable "dlq_max_receive_count" {
+  description = "Number of failed processing attempts to move to DLQ"
+  type = number
+  default = 3
+}
