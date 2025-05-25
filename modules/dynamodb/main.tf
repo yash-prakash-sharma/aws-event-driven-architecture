@@ -9,17 +9,17 @@ resource "aws_dynamodb_table" "this" {
     name = "order_id"
     type = "S"
   }
-
+  /*
   attribute {
     name = "created_at"
     type = "S"
   }
-
+  */
   attribute {
     name = "customer_id"
     type = "S"
   }
-
+  /*
   attribute {
     name = "status"
     type = "S"
@@ -34,7 +34,7 @@ resource "aws_dynamodb_table" "this" {
     name = "shipping_address"
     type = "S"
   }
-
+  */
   global_secondary_index {
     name               = "customer_id-index"
     hash_key           = "customer_id"
