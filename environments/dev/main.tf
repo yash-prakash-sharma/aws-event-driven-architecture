@@ -36,10 +36,10 @@ module "sqs" {
 }
 
 module "iam" {
-  source         = "../../modules/iam"
-  resource_prefix    = var.resource_prefix
-  sqs_queue_arns = [module.sqs.queue_arn]
-  primary_region         = var.primary_region
+  source          = "../../modules/iam"
+  resource_prefix = var.resource_prefix
+  sqs_queue_arns  = [module.sqs.queue_arn]
+  primary_region  = var.primary_region
 }
 
 module "lambda" {
@@ -56,4 +56,47 @@ module "lambda" {
   sqs_queue_arn       = module.sqs.queue_arn
   batch_size          = var.batch_size
   depends_on_sqs      = module.sqs
+}
+
+# OIDC
+resource "aws_iam_openid_connect_provider" "github" {
+  url = "https://token.actions.githubusercontent.com"
+
+  client_id_list = ["sts.amazonaws.com"]
+
+  thumbprint_list = [
+    "D89E3BD43D5D909B47A18977AA9D5CE36CEE184C"
+  ]
+}
+
+
+resource "aws_iam_role" "github_actions" {
+  name = "${var.resource_prefix}-github-oidc-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Federated = aws_iam_openid_connect_provider.github.arn
+        },
+        Action = "sts:AssumeRoleWithWebIdentity",
+        Condition = {
+          StringEquals = {
+            "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
+          },
+          StringLike = {
+            "token.actions.githubusercontent.com:sub" = "repo:yash-prakash-sharma/aws-event-driven-architecture:ref:refs/heads/main"
+          }
+        }
+      }
+    ]
+  })
+}
+
+
+resource "aws_iam_role_policy_attachment" "github_terraform_attach" {
+  role       = aws_iam_role.github_actions.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }

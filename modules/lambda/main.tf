@@ -26,7 +26,7 @@ resource "aws_lambda_event_source_mapping" "this" {
   batch_size       = var.batch_size
 
   depends_on = [
-    var.depends_on_lambda,
+    aws_lambda_function.this,
     var.depends_on_sqs
   ]
 }

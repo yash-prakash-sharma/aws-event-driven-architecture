@@ -16,5 +16,4 @@ environment_variables = {
   ENV = "dev"
 }
 
-
 batch_size = 5
