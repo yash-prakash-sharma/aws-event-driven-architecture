@@ -70,6 +70,12 @@ module "lambda" {
   depends_on_sqs      = module.sqs
 }
 
+module "s3" {
+  source          = "../../modules/s3"
+  resource_prefix = var.resource_prefix
+  force_destroy   = var.force_destroy
+}
+
 # OIDC
 resource "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
@@ -77,7 +83,7 @@ resource "aws_iam_openid_connect_provider" "github" {
   client_id_list = ["sts.amazonaws.com"]
 
   thumbprint_list = [
-    "D89E3BD43D5D909B47A18977AA9D5CE36CEE184C"
+    "d89e3bd43d5d909b47a18977aa9d5ce36cee184c"
   ]
 }
 

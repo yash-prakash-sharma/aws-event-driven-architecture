@@ -28,5 +28,8 @@ environment_variables = {
   ENV = "dev"
 }
 
+# s3
+force_destroy = true
+
 # event processing
 batch_size = 5

@@ -92,9 +92,18 @@ variable "dlq_max_receive_count" {
   default     = 3
 }
 
+# lambda module
 variable "function_name" {}
 variable "runtime" {}
 variable "handler" {}
 variable "lambda_package" {}
 variable "environment_variables" {}
+
+# s3 module
+variable "force_destroy" {
+  description = "It indicates all objects should be deleted from the bucket when the bucket is destroyed."
+  type        = bool
+  default     = false
+}
+
 variable "batch_size" {}
