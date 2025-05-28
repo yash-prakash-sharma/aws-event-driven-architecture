@@ -51,6 +51,8 @@ module "iam" {
   source          = "../../modules/iam"
   resource_prefix = var.resource_prefix
   sqs_queue_arns  = [module.sqs.queue_arn]
+  table_arn       = [module.dynamodb.table_arn]
+  s3_bucket_arn   = module.s3.s3_bucket_arn
   primary_region  = var.primary_region
 }
 
