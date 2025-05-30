@@ -25,7 +25,8 @@ handler        = "lambda_function.handler"
 runtime        = "python3.11"
 lambda_package = "../../modules/lambda/lambda_function.zip"
 environment_variables = {
-  ENV = "dev"
+  ENV          = "dev"
+  SENDER_EMAIL = "yashprakashsharma2000@gmail.com"
 }
 
 # s3

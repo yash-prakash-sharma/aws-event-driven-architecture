@@ -1,8 +1,11 @@
+/*
+# TO create lambda_function.zip for changed code
 data "archive_file" "zip" {
   type        = "zip"
   source_dir  = "${path.module}/code"
   output_path = "${path.module}/lambda_function.zip"
 }
+*/
 
 resource "aws_lambda_function" "this" {
   filename      = var.lambda_package

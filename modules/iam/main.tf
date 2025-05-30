@@ -56,6 +56,7 @@ data "aws_iam_policy_document" "dynamodb_action_policy_doc" {
   }
 }
 
+# Policy to allow writing to s3 bucket
 data "aws_iam_policy_document" "s3_action_policy_doc" {
   statement {
     effect = "Allow"
@@ -66,6 +67,20 @@ data "aws_iam_policy_document" "s3_action_policy_doc" {
     resources = ["${var.s3_bucket_arn}/*"]
   }
 }
+
+# Policy to allow send email via ses
+data "aws_iam_policy_document" "ses_email_policy_doc" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+        "ses:SendEmail",
+        "ses:SendRawEmail"
+    ]
+    resources = ["*"]
+  }
+}
+
 
 # IAM Role that Lambda will assume
 resource "aws_iam_role" "iam_role_for_lambda_exec" {
@@ -101,6 +116,13 @@ resource "aws_iam_policy" "s3_action_policy" {
     policy = data.aws_iam_policy_document.s3_action_policy_doc.json 
 }
 
+# IAM Policy for SES email notification
+resource "aws_iam_policy" "ses_email_policy" {
+    name = "${var.resource_prefix}-ses-email"
+    description = "Allow Lambda to send email notifications"
+    policy = data.aws_iam_policy_document.ses_email_policy_doc.json 
+}
+
 # Attach SQS read policy to Role
 resource "aws_iam_role_policy_attachment" "attach_sqs_read" {
     role = aws_iam_role.iam_role_for_lambda_exec.name
@@ -124,4 +146,10 @@ resource "aws_iam_role_policy_attachment" "attach_dynamodb_action" {
 resource "aws_iam_role_policy_attachment" "attach_s3_action" {
     role = aws_iam_role.iam_role_for_lambda_exec.name
     policy_arn = aws_iam_policy.s3_action_policy.arn
+}
+
+# Attach SES email Policy to role
+resource "aws_iam_role_policy_attachment" "attach_ses_access" {
+    role = aws_iam_role.iam_role_for_lambda_exec.name
+    policy_arn = aws_iam_policy.ses_email_policy.arn
 }

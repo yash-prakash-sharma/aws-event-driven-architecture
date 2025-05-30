@@ -57,13 +57,17 @@ module "iam" {
 }
 
 module "lambda" {
-  source                = "../../modules/lambda"
-  function_name         = var.function_name
-  lambda_role_arn       = module.iam.lambda_role_arn
-  runtime               = var.runtime
-  handler               = var.handler
-  lambda_package        = var.lambda_package
-  environment_variables = var.environment_variables
+  source          = "../../modules/lambda"
+  function_name   = var.function_name
+  lambda_role_arn = module.iam.lambda_role_arn
+  runtime         = var.runtime
+  handler         = var.handler
+  lambda_package  = var.lambda_package
+  environment_variables = merge(var.environment_variables, {
+    DYNAMODB_TABLE = module.dynamodb.table_name
+    S3_BUCKET      = module.s3.s3_bucket_name
+    REGION_NAME    = var.primary_region
+  })
 
   # Event source mapping inputs
   lambda_function_arn = module.lambda.lambda_function_arn

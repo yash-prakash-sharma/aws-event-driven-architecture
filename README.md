@@ -68,11 +68,11 @@ The project includes:
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/aws-event-driven-architecture.git
+git clone https://github.com/yash-prakash-sharma/aws-event-driven-architecture.git
 cd aws-event-driven-architecture
 ```
 
-### 2️⃣ Configure AWS Credentials
+### 2️⃣ Configure AWS Credentials & other required resources
 
 Ensure your AWS CLI is configured with credentials that have permissions to deploy Lambda, SQS, S3, SES, DynamoDB, and IAM resources.
 
